@@ -152,7 +152,14 @@
             <a href="#inicio" class="text-3xl  primary-red-text logo-glef font-bold" id="logo-glef" >
                 GLEF
             </a>
-            <nav class="space-x-6 text-gray-700">
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-700">
                 <a href="#inicio" class="hover:primary-red-text">Inicio</a>
                 <a href="#productos" class="hover:primary-red-text">Productos</a>
                 <a href="#marcas" class="hover:primary-red-text">Marcas</a>
@@ -160,6 +167,14 @@
                 <a href="#nosotros" class="hover:primary-red-text">Nosotros</a>
                 <a href="#contacto" class="hover:primary-red-text">Contacto</a>
             </nav>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#inicio" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Inicio</a>
+            <a href="#productos" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Productos</a>
+            <a href="#marcas" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Marcas</a>
+            <a href="#instituciones" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Instituciones</a>
+            <a href="#nosotros" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Nosotros</a>
+            <a href="#contacto" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Contacto</a>
         </div>
     </header>
 
@@ -364,9 +379,9 @@
 
         openBtn.onclick = function() {
             modal.style.display = "block";
-            geminiResponseContainer.style.display = "none"; // Ocultar respuesta anterior al abrir
+            geminiResponseContainer.style.display = "none"; 
             geminiResponseDiv.innerHTML = '<pre>Esperando tu consulta...</pre>';
-            userNeedsTextarea.value = ""; // Limpiar el textarea
+            userNeedsTextarea.value = ""; 
         }
 
         closeBtn.onclick = function() {
@@ -388,7 +403,7 @@
             }
 
             loader.style.display = "block";
-            geminiResponseDiv.innerHTML = ""; // Limpiar respuesta anterior
+            geminiResponseDiv.innerHTML = ""; 
             geminiResponseContainer.style.display = "none";
 
 
@@ -400,7 +415,7 @@ Sé claro, amigable y profesional. Estructura tu respuesta en puntos para fácil
 
             let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
             const payload = { contents: chatHistory };
-            const apiKey = ""; // Se deja vacío, Canvas lo gestionará
+            const apiKey = ""; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
             
             try {
@@ -437,7 +452,34 @@ Sé claro, amigable y profesional. Estructura tu respuesta en puntos para fácil
             }
         }
 
-    </script>
+        // Lógica para el menú hamburguesa
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Opcional: Cerrar menú al hacer clic en un enlace (para Single Page Applications)
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    // El smooth scroll ya está manejado por el otro script
+                });
+            });
+        }
+        
+        // Aplicar fuente Mistral al logo del footer también
+        const logoFooter = document.getElementById('logo-glef-footer');
+        if (logoFooter) {
+            // La fuente ya se aplica mediante CSS con #logo-glef, #logo-glef-footer
+            // Si necesitas un tamaño diferente para el footer, puedes añadirlo aquí o en CSS:
+            // logoFooter.style.fontSize = "2.2rem"; 
+        }
+
+    </script>
 </body>
 </html>
