@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth; /* Para desplazamiento suave general */
         }
         .hero-bg {
             background-color: #f8f9fa; /* Un gris muy claro para el fondo del hero */
@@ -50,23 +51,16 @@
 
         /* Tamaños específicos para los logos */
         .logo-marcas { /* Para los logos de las marcas de empresas */
-            height: 80px; /* Altura para logos de marcas. PUEDES AJUSTAR ESTE VALOR. */
+            height: 80px; 
             max-height: 80px; 
         }
-        #logo-glef {
-            font-family: 'Mistral', cursive; /* Intenta usar Mistral, si no, una cursiva genérica */
-            /* Ajusta el tamaño si es necesario para Mistral, ya que las fuentes varían mucho */
-             font-size: 2.9rem; 
-            /* Las clases de Tailwind 'text-3xl font-bold' seguirán aplicando otros estilos,
-               pero font-family aquí tendrá precedencia. */
-        }
-
+      
         .logo-prime {
-            height: 100px; /* Altura específica para el logo de Primekey */
+            height: 100px; /* Altura específica para el logo de Primekey y Greenbit */
             max-height: 100px;
         }
         .logo-instituciones { /* Para los logos de las instituciones */
-            height: 75px; /* Altura para logos de instituciones. PUEDES AJUSTAR ESTE VALOR. */
+            height: 75px; 
             max-height: 75px;
         }
         .logo-poder{
@@ -74,14 +68,37 @@
             max-height: 110px;
         }
         .logo-minEconomia { /* Para el logo del Ministerio de Economía y Finanzas */
-            height: 40px; /* Altura específica para el logo del Ministerio de Economía y Finanzas */
+            height: 40px; 
             max-height: 40px;
+        }
+        
+        /* Estilo para el logo GLEF con fuente Mistral */
+        /* El ID #logo-glef es para el <a> que contiene la imagen del logo en el header */
+        /* El ID #logo-glef-footer es para el texto del logo en el footer */
+        #logo-glef, #logo-glef-footer {
+            font-family: 'Mistral', cursive; 
+        }
+        /* Si el logo del header es una imagen, font-size en #logo-glef (el <a>) no afectará el texto de la imagen. */
+        /* Si el logo del footer es texto, este font-size sí le afectará. */
+        #logo-glef-footer {
+             font-size: 2.5rem; /* Ajustar tamaño para el logo de texto en el footer si es necesario */
+        }
+
+
+        /* Estilos para el enlace de navegación activo */
+        .active-nav-link {
+            color: #CC0000 !important; /* Color rojo principal, !important para asegurar precedencia sobre Tailwind a veces */
+            font-weight: 700 !important; /* Equivalente a font-bold de Tailwind */
+        }
+        /* Estilo específico para el enlace activo en el menú móvil */
+        #mobile-menu .active-nav-link {
+            background-color: #fee2e2; /* Tailwind color red-100, un rojo muy claro */
         }
 
 
         /* Estilos para el Modal */
         .modal {
-            display: none; /* Oculto por defecto */
+            display: none; 
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -89,7 +106,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Fondo oscuro semitransparente */
+            background-color: rgba(0,0,0,0.6); 
             padding-top: 60px;
         }
         .modal-content {
@@ -119,7 +136,7 @@
             cursor: pointer;
         }
         #geminiResponse pre {
-            white-space: pre-wrap; /* Para que el texto se ajuste */
+            white-space: pre-wrap; 
             word-wrap: break-word;
             background-color: #f9f9f9;
             padding: 15px;
@@ -130,14 +147,14 @@
             font-size: 0.9em;
         }
         .loader {
-            border: 4px solid #f3f3f3; /* Light grey */
-            border-top: 4px solid #CC0000; /* Red */
+            border: 4px solid #f3f3f3; 
+            border-top: 4px solid #CC0000; 
             border-radius: 50%;
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
             margin: 10px auto;
-            display: none; /* Oculto por defecto */
+            display: none; 
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -149,9 +166,8 @@
 
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#inicio" class="text-3xl  primary-red-text logo-glef font-bold" id="logo-glef" >
-                <img src="./imgs/image copy.png" alt="logoGlef" class="w-20 h-18 logo-glef">
-            </a>
+            <a href="#inicio" id="logo-glef" class="nav-item-link"> 
+                <img src="./imgs/image copy.png" alt="logoGlef" class="w-20 h-auto"> </a>
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -160,21 +176,21 @@
                 </button>
             </div>
             <nav class="hidden md:flex space-x-6 text-gray-700">
-                <a href="#inicio" class="hover:primary-red-text">Inicio</a>
-                <a href="#productos" class="hover:primary-red-text">Productos</a>
-                <a href="#marcas" class="hover:primary-red-text">Marcas</a>
-                <a href="#instituciones" class="hover:primary-red-text">Instituciones</a>
-                <a href="#nosotros" class="hover:primary-red-text">Nosotros</a>
-                <a href="#contacto" class="hover:primary-red-text">Contacto</a>
+                <a href="#inicio" class="nav-item-link hover:primary-red-text">Inicio</a>
+                <a href="#productos" class="nav-item-link hover:primary-red-text">Productos</a>
+                <a href="#marcas" class="nav-item-link hover:primary-red-text">Marcas</a>
+                <a href="#instituciones" class="nav-item-link hover:primary-red-text">Instituciones</a>
+                <a href="#nosotros" class="nav-item-link hover:primary-red-text">Nosotros</a>
+                <a href="#contacto" class="nav-item-link hover:primary-red-text">Contacto</a>
             </nav>
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-            <a href="#inicio" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Inicio</a>
-            <a href="#productos" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Productos</a>
-            <a href="#marcas" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Marcas</a>
-            <a href="#instituciones" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Instituciones</a>
-            <a href="#nosotros" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Nosotros</a>
-            <a href="#contacto" class="block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Contacto</a>
+            <a href="#inicio" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Inicio</a>
+            <a href="#productos" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Productos</a>
+            <a href="#marcas" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Marcas</a>
+            <a href="#instituciones" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Instituciones</a>
+            <a href="#nosotros" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Nosotros</a>
+            <a href="#contacto" class="nav-item-link block py-2 px-6 text-gray-700 hover:bg-gray-100 hover:primary-red-text mobile-menu-link">Contacto</a>
         </div>
     </header>
 
@@ -273,9 +289,9 @@
             <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                 <img src="./imgs/pngwing.com.png" alt="Logo de Lenovo" title="Lenovo" class="brand-logo-base logo-marcas">
                 <img src="./imgs/Credence-ID-Logo.webp" alt="Credence-ID-Logo" title="Credence-ID-Logo" class="brand-logo-base logo-marcas">
-                <img src="./imgs/greenbit-logo.jpg" alt="Logo de Dell" title="Dell" class="brand-logo-base logo-prime">
+                <img src="./imgs/greenbit-logo.jpg" alt="Logo de Greenbit" title="Greenbit" class="brand-logo-base logo-prime">
                 <img src="./imgs/Bodet-Time-2016.png" alt="Logo de Bodet" title="Bodet" class="brand-logo-base logo-marcas">
-                <img src="./imgs/Primekey.png" alt="Logo de Microsoft" title="Microsoft" class="brand-logo-base logo-prime">
+                <img src="./imgs/Primekey.png" alt="Logo de Primekey" title="Primekey" class="brand-logo-base logo-prime">
             </div>
         </div>
     </section>
@@ -331,16 +347,16 @@
     <footer class="bg-gray-800 text-gray-300 py-12">
         <div class="container mx-auto px-6 text-center">
             <div class="mb-4">
-                <a href="#inicio" class="text-3xl  primary-red-text logo-glef font-bold" id="logo-glef">GLEF</a>
+                <a href="#inicio" id="logo-glef-footer" class="nav-item-link text-3xl primary-red-text font-bold">GLEF</a>
             </div>
             <nav class="space-x-4 mb-6">
-                <a href="#inicio" class="hover:text-white">Inicio</a>
-                <a href="#productos" class="hover:text-white">Productos</a>
-                <a href="#marcas" class="hover:text-white">Marcas</a>
-                <a href="#instituciones" class="hover:text-white">Instituciones</a>
-                <a href="#nosotros" class="hover:text-white">Nosotros</a>
-                <a href="#contacto" class="hover:text-white">Contacto</a>
-                <a href="#politica-privacidad" class="hover:text-white">Política de Privacidad</a>
+                <a href="#inicio" class="nav-item-link hover:text-white">Inicio</a>
+                <a href="#productos" class="nav-item-link hover:text-white">Productos</a>
+                <a href="#marcas" class="nav-item-link hover:text-white">Marcas</a>
+                <a href="#instituciones" class="nav-item-link hover:text-white">Instituciones</a>
+                <a href="#nosotros" class="nav-item-link hover:text-white">Nosotros</a>
+                <a href="#contacto" class="nav-item-link hover:text-white">Contacto</a>
+                <a href="#politica-privacidad" class="nav-item-link hover:text-white">Política de Privacidad</a>
             </nav>
             <p>&copy; <span id="currentYear"></span> GLEF - Grupo Logístico Económico y Financiero. Todos los derechos reservados.</p>
             <p class="text-sm mt-2">Dirección: Enrique Palacios 360 Ofc. 202, Miraflores</p>
@@ -351,21 +367,43 @@
         // Script para el año actual en el footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-        // Smooth scroll para los enlaces de anclaje
+        // Lógica para el menú hamburguesa
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Smooth scroll y cierre de menú móvil
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
-                if (targetId.length > 1) {
+
+                // Cerrar menú móvil si está abierto y el enlace es del menú móvil
+                if (mobileMenu && !mobileMenu.classList.contains('hidden') && this.classList.contains('mobile-menu-link')) {
+                    mobileMenu.classList.add('hidden');
+                }
+                
+                if (targetId.length > 1 && targetId !== '#') {
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
+                        const headerOffset = document.querySelector('header').offsetHeight || 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
                         });
                     }
                 }
             });
         });
+
 
         // Lógica del Modal Configurador Inteligente
         const modal = document.getElementById('configuratorModal');
@@ -377,109 +415,134 @@
         const geminiResponseContainer = document.getElementById('geminiResponseContainer');
         const loader = document.getElementById('loader');
 
-        openBtn.onclick = function() {
-            modal.style.display = "block";
-            geminiResponseContainer.style.display = "none"; 
-            geminiResponseDiv.innerHTML = '<pre>Esperando tu consulta...</pre>';
-            userNeedsTextarea.value = ""; 
+        if(openBtn) {
+            openBtn.onclick = function() {
+                if(modal) modal.style.display = "block";
+                if(geminiResponseContainer) geminiResponseContainer.style.display = "none"; 
+                if(geminiResponseDiv) geminiResponseDiv.innerHTML = '<pre>Esperando tu consulta...</pre>';
+                if(userNeedsTextarea) userNeedsTextarea.value = ""; 
+            }
         }
-
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
+        if(closeBtn) {
+            closeBtn.onclick = function() {
+                if(modal) modal.style.display = "none";
+            }
         }
-
+        
         window.onclick = function(event) {
             if (event.target == modal) {
-                modal.style.display = "none";
+                if(modal) modal.style.display = "none";
             }
         }
 
-        getRecommendationBtn.onclick = async function() {
-            const userQuery = userNeedsTextarea.value.trim();
-            if (!userQuery) {
-                geminiResponseDiv.innerHTML = '<pre class="text-red-500">Por favor, describe tus necesidades primero.</pre>';
-                geminiResponseContainer.style.display = "block";
-                return;
-            }
+        if(getRecommendationBtn) {
+            getRecommendationBtn.onclick = async function() {
+                const userQuery = userNeedsTextarea.value.trim();
+                if (!userQuery) {
+                    geminiResponseDiv.innerHTML = '<pre class="text-red-500">Por favor, describe tus necesidades primero.</pre>';
+                    geminiResponseContainer.style.display = "block";
+                    return;
+                }
 
-            loader.style.display = "block";
-            geminiResponseDiv.innerHTML = ""; 
-            geminiResponseContainer.style.display = "none";
+                if(loader) loader.style.display = "block";
+                if(geminiResponseDiv) geminiResponseDiv.innerHTML = ""; 
+                if(geminiResponseContainer) geminiResponseContainer.style.display = "none";
 
 
-            const prompt = `Eres un asistente experto en tecnología para GLEF, una empresa peruana que provee equipos como computadoras de escritorio, all-in-one, laptops y tablets al estado y al público. Un cliente describe su necesidad: '${userQuery}'. Basado en esto, recomienda de forma concisa y en español peruano:
+                const prompt = `Eres un asistente experto en tecnología para GLEF, una empresa peruana que provee equipos como computadoras de escritorio, all-in-one, laptops y tablets al estado y al público. Un cliente describe su necesidad: '${userQuery}'. Basado en esto, recomienda de forma concisa y en español peruano:
 1. Tipo de equipo principal (desktop, laptop, AIO, tablet) más adecuado.
 2. Características clave sugeridas (ej. procesador, RAM, almacenamiento, tamaño de pantalla, características especiales relevantes).
 3. Breves consideraciones adicionales para este tipo de cliente o necesidad.
 Sé claro, amigable y profesional. Estructura tu respuesta en puntos para fácil lectura.`;
 
-            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            const payload = { contents: chatHistory };
-            const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("Error en la API de Gemini:", errorData);
-                    throw new Error(`Error de la API: ${response.status} ${response.statusText}. Detalles: ${JSON.stringify(errorData.error ? errorData.error.message : 'No hay detalles adicionales.')}`);
-                }
-
-                const result = await response.json();
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 
-                let recommendationText = "No se pudo obtener una recomendación en este momento.";
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    recommendationText = result.candidates[0].content.parts[0].text;
-                } else {
-                     console.warn("Respuesta inesperada de Gemini:", result);
-                }
-                geminiResponseDiv.innerHTML = `<pre>${recommendationText}</pre>`;
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
 
-            } catch (error) {
-                console.error("Error al llamar a Gemini API:", error);
-                geminiResponseDiv.innerHTML = `<pre class="text-red-500">Lo sentimos, ocurrió un error al procesar tu solicitud: ${error.message}. Por favor, intenta de nuevo más tarde.</pre>`;
-            } finally {
-                loader.style.display = "none";
-                geminiResponseContainer.style.display = "block";
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Error en la API de Gemini:", errorData);
+                        throw new Error(`Error de la API: ${response.status} ${response.statusText}. Detalles: ${JSON.stringify(errorData.error ? errorData.error.message : 'No hay detalles adicionales.')}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    let recommendationText = "No se pudo obtener una recomendación en este momento.";
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        recommendationText = result.candidates[0].content.parts[0].text;
+                    } else {
+                         console.warn("Respuesta inesperada de Gemini:", result);
+                    }
+                    if(geminiResponseDiv) geminiResponseDiv.innerHTML = `<pre>${recommendationText}</pre>`;
+
+                } catch (error) {
+                    console.error("Error al llamar a Gemini API:", error);
+                    if(geminiResponseDiv) geminiResponseDiv.innerHTML = `<pre class="text-red-500">Lo sentimos, ocurrió un error al procesar tu solicitud: ${error.message}. Por favor, intenta de nuevo más tarde.</pre>`;
+                } finally {
+                    if(loader) loader.style.display = "none";
+                    if(geminiResponseContainer) geminiResponseContainer.style.display = "block";
+                }
             }
         }
-
-        // Lógica para el menú hamburguesa
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Opcional: Cerrar menú al hacer clic en un enlace (para Single Page Applications)
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    // El smooth scroll ya está manejado por el otro script
-                });
-            });
-        }
         
-        // Aplicar fuente Mistral al logo del footer también
-        const logoFooter = document.getElementById('logo-glef-footer');
-        if (logoFooter) {
-            // La fuente ya se aplica mediante CSS con #logo-glef, #logo-glef-footer
-            // Si necesitas un tamaño diferente para el footer, puedes añadirlo aquí o en CSS:
-            // logoFooter.style.fontSize = "2.2rem"; 
+        // Lógica para resaltar enlace activo en NAV
+        const sections = document.querySelectorAll("section[id]");
+        const allNavLinks = document.querySelectorAll(".nav-item-link"); 
+        const headerElement = document.querySelector("header");
+        let headerHeight = 70; 
+        if (headerElement) {
+            headerHeight = headerElement.offsetHeight;
         }
 
+        function updateActiveNavLink() {
+            let currentSectionId = "";
+            // Considerar el caso donde no hay secciones (poco probable aquí, pero buena práctica)
+            if (sections.length === 0) return;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                // Ajuste para que la sección se active un poco antes de que su tope exacto pase el header
+                // Un valor de ~1.5 a 2 veces la altura del header suele funcionar bien como umbral superior
+                // y un poco por encima del header para el umbral inferior.
+                const activationPoint = sectionTop - headerHeight - (window.innerHeight * 0.3); // Activar cuando el 30% superior de la sección esté visible o por encima
+                
+                if (window.scrollY >= activationPoint) {
+                    currentSectionId = section.getAttribute("id");
+                }
+            });
+            
+            // Si después de revisar todas las secciones, currentSectionId está vacío (estamos muy arriba),
+            // y si la primera sección es "inicio", activarla.
+            if (!currentSectionId && sections.length > 0 && sections[0].id === 'inicio' && window.scrollY < sections[0].offsetTop) {
+                 currentSectionId = 'inicio';
+            }
+
+
+            allNavLinks.forEach(link => {
+                link.classList.remove('active-nav-link');
+                const linkHref = link.getAttribute('href');
+                if (linkHref && linkHref.startsWith("#") && linkHref.length > 1) {
+                    // Quitar el '#' del href para comparar con el ID de la sección
+                    if (linkHref.substring(1) === currentSectionId) {
+                        link.classList.add('active-nav-link');
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNavLink);
+        window.addEventListener('load', updateActiveNavLink); 
+        
     </script>
 </body>
 </html>
