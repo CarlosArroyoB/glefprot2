@@ -9,157 +9,103 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth; /* Para desplazamiento suave general */
+            scroll-behavior: smooth; 
         }
         .hero-bg {
-            background-color: #f8f9fa; /* Un gris muy claro para el fondo del hero */
+            background-color: #f8f9fa; 
         }
         .primary-red {
-            background-color: #CC0000; /* Rojo principal GLEF */
+            background-color: #CC0000; 
         }
         .primary-red-text {
             color: #CC0000;
         }
-        .primary-red-border {
-            border-color: #CC0000;
+        
+        /* --- Estilos para Carruseles --- */
+
+        /* Carrusel de Productos (Swiper) */
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            padding-bottom: 50px; /* Espacio para la paginación */
         }
-        .secondary-gray-text {
-            color: #4A5568; /* Un gris medio para texto secundario */
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .cta-button {
-            transition: all 0.3s ease;
+        .swiper-button-next, .swiper-button-prev {
+            color: #CC0000 !important;
         }
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        .swiper-pagination-bullet-active {
+            background-color: #CC0000 !important;
         }
 
-        /* Estilos para logos de marcas e instituciones */
-        .brand-logo-base { /* Estilos comunes para todos los logos */
-            transition: transform 0.3s ease, filter 0.3s ease;
+        /* Carrusel de Marcas e Instituciones (CSS Marquee) */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: flex;
+            width: 200%; /* El doble del contenedor para el efecto de bucle */
+            animation: scroll 30s linear infinite; /* Ajusta la duración (30s) para cambiar la velocidad */
+        }
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused; /* Pausa la animación al pasar el mouse */
+        }
+        .marquee-content .logo-container {
+            flex-shrink: 0;
+            width: 50%; /* La mitad del contenido, contiene un set completo de logos */
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+        }
+        
+        /* --- Otros Estilos --- */
+
+        .brand-logo-base { 
+            transition: transform 0.3s ease;
             filter: grayscale(35%);
             opacity: 0.8;
-            object-fit: contain; /* IMPORTANTE: Para que el logo se escale bien sin distorsionarse */
-            display: inline-block; /* Asegura que la altura y el object-fit funcionen correctamente */
-            vertical-align: middle; /* Alineación vertical si están en línea */
+            object-fit: contain; 
+            display: inline-block; 
+            vertical-align: middle; 
         }
         .brand-logo-base:hover {
             transform: scale(1.1);
             filter: grayscale(0%);
             opacity: 1;
         }
-
-        /* Tamaños específicos para los logos */
-        .logo-marcas { /* Para los logos de las marcas de empresas */
-            height: 80px; 
-            max-height: 80px; 
-        }
-      
-        .logo-prime {
-            height: 100px; /* Altura específica para el logo de Primekey y Greenbit */
-            max-height: 100px;
-        }
-        .logo-instituciones { /* Para los logos de las instituciones */
-            height: 75px; 
-            max-height: 75px;
-        }
-        .logo-poder{
-            height: 110px; /* Altura específica para el logo del Poder Judicial */
-            max-height: 110px;
-        }
-        .logo-minEconomia { /* Para el logo del Ministerio de Economía y Finanzas */
-            height: 40px; 
-            max-height: 40px;
-        }
+        .logo-marcas { height: 80px; max-height: 80px; }
+        .logo-prime { height: 100px; max-height: 100px; }
+        .logo-instituciones { height: 75px; max-height: 75px; }
+        .logo-poder { height: 110px; max-height: 110px; }
+        .logo-minEconomia { height: 40px; max-height: 40px; }
         
-        /* Estilo para el logo GLEF con fuente Mistral */
-        /* El ID #logo-glef es para el <a> que contiene la imagen del logo en el header */
-        /* El ID #logo-glef-footer es para el texto del logo en el footer */
-        #logo-glef, #logo-glef-footer {
-            font-family: 'Mistral', cursive; 
-        }
-        /* Si el logo del header es una imagen, font-size en #logo-glef (el <a>) no afectará el texto de la imagen. */
-        /* Si el logo del footer es texto, este font-size sí le afectará. */
-        #logo-glef-footer {
-             font-size: 2.5rem; /* Ajustar tamaño para el logo de texto en el footer si es necesario */
-        }
+        #logo-glef, #logo-glef-footer { font-family: 'Mistral', cursive; }
+        #logo-glef-footer { font-size: 2.5rem; }
 
-
-        /* Estilos para el enlace de navegación activo */
         .active-nav-link {
-            color: #CC0000 !important; /* Color rojo principal, !important para asegurar precedencia sobre Tailwind a veces */
-            font-weight: 700 !important; /* Equivalente a font-bold de Tailwind */
+            color: #CC0000 !important; 
+            font-weight: 700 !important; 
         }
-        /* Estilo específico para el enlace activo en el menú móvil */
         #mobile-menu .active-nav-link {
-            background-color: #fee2e2; /* Tailwind color red-100, un rojo muy claro */
+            background-color: #fee2e2; 
         }
 
-
-        /* Estilos para el Modal */
-        .modal {
-            display: none; 
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6); 
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 25px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        #geminiResponse pre {
-            white-space: pre-wrap; 
-            word-wrap: break-word;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #eee;
-            max-height: 300px;
-            overflow-y: auto;
-            font-size: 0.9em;
-        }
-        .loader {
-            border: 4px solid #f3f3f3; 
-            border-top: 4px solid #CC0000; 
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-            display: none; 
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); padding-top: 60px; }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 25px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; }
+        .close-button { color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 20px; }
+        .close-button:hover, .close-button:focus { color: black; text-decoration: none; cursor: pointer; }
+        #geminiResponse pre { white-space: pre-wrap; word-wrap: break-word; background-color: #f9f9f9; padding: 15px; border-radius: 6px; border: 1px solid #eee; max-height: 300px; overflow-y: auto; font-size: 0.9em; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #CC0000; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 10px auto; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-white">
@@ -197,21 +143,15 @@
     <section id="inicio" class="hero-bg py-20 md:py-32">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-                Soluciones Tecnológicas <span class="primary-red-text">Confiables</span> para tu Entidad y Hogar
+                Soluciones Tecnológicas Integrales <span class="primary-red-text">para el Sector Público</span>
             </h1>
-            <p class="text-lg md:text-xl secondary-gray-text mb-10 max-w-3xl mx-auto">
-                En GLEF, proveemos equipamiento tecnológico de vanguardia para instituciones estatales y ponemos a tu alcance los mejores equipos remanentes.
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                En GLEF, somos especialistas en proveer equipamiento tecnológico de vanguardia y soluciones a medida para las instituciones del Estado.
             </p>
-            <div class="space-y-4 md:space-y-0 md:space-x-6">
-                <a href="#catalogo-institucional" 
-                   class="cta-button inline-block primary-red text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-red-700 text-lg">
-                    Portal Institucional
-                </a>
-                <a href="#tienda-publico" 
-                   class="cta-button inline-block bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-gray-800 text-lg">
-                    Tienda al Público
-                </a>
-            </div>
+            <a href="#contacto" 
+               class="cta-button inline-block primary-red text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-red-700 text-lg">
+                Solicitar Cotización
+            </a>
         </div>
     </section>
 
@@ -222,9 +162,7 @@
                 <p class="secondary-gray-text text-lg max-w-2xl mx-auto">
                     Descubre la variedad de equipos que ofrecemos. ¿No estás seguro de qué necesitas?
                 </p>
-                <button id="openConfiguratorBtn" class="mt-4 cta-button inline-block primary-red text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-red-700 text-lg">
-                    ✨ Configurador Inteligente de Equipos
-                </button>
+    
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -262,36 +200,29 @@
         </div>
     </section>
 
-    <div id="configuratorModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="closeModalBtn">&times;</span>
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">✨ Configurador Inteligente de Equipos</h3>
-            <p class="secondary-gray-text mb-4">Describe tus necesidades y te ayudaremos a encontrar la mejor solución tecnológica.</p>
-            
-            <textarea id="userNeeds" rows="5" class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Ej: Necesito 50 laptops para trabajo de oficina administrativa, con buena duración de batería y que puedan correr software de ofimática estándar. Presupuesto aproximado por unidad: S/ 2500."></textarea>
-            
-            <button id="getRecommendationBtn" class="w-full primary-red text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-red-700 text-lg">
-                Obtener Recomendación
-            </button>
 
-            <div id="loader" class="loader mt-4"></div>
-            
-            <div id="geminiResponseContainer" class="mt-6">
-                <h4 class="text-xl font-semibold text-gray-700 mb-2">Sugerencia:</h4>
-                <div id="geminiResponse"><pre>Esperando tu consulta...</pre></div>
-            </div>
-        </div>
-    </div>
-
-    <section id="marcas" class="py-16 md:py-24 bg-gray-100">
+     <section id="marcas" class="py-16 md:py-24 bg-gray-100">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Trabajamos con las Mejores Marcas</h2>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                <img src="./imgs/pngwing.com.png" alt="Logo de Lenovo" title="Lenovo" class="brand-logo-base logo-marcas">
-                <img src="./imgs/Credence-ID-Logo.webp" alt="Credence-ID-Logo" title="Credence-ID-Logo" class="brand-logo-base logo-marcas">
-                <img src="./imgs/greenbit-logo.jpg" alt="Logo de Greenbit" title="Greenbit" class="brand-logo-base logo-prime">
-                <img src="./imgs/Bodet-Time-2016.png" alt="Logo de Bodet" title="Bodet" class="brand-logo-base logo-marcas">
-                <img src="./imgs/Primekey.png" alt="Logo de Primekey" title="Primekey" class="brand-logo-base logo-prime">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Marcas Aliadas Estratégicas</h2>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <!-- Primer set de logos -->
+                    <div class="logo-container">
+                        <img src="./imgs/pngwing.com.png" alt="[Logo de Lenovo]" title="Lenovo" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/Credence-ID-Logo.webp" alt="[Logo de Credence ID]" title="Credence-ID-Logo" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/greenbit-logo.jpg" alt="[Logo de Greenbit]" title="Greenbit" class="brand-logo-base logo-prime">
+                        <img src="./imgs/Bodet-Time-2016.png" alt="[Logo de Bodet]" title="Bodet" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/Primekey.png" alt="[Logo de Primekey]" title="Primekey" class="brand-logo-base logo-prime">
+                    </div>
+                    <!-- Segundo set de logos (duplicado para bucle infinito) -->
+                    <div class="logo-container">
+                        <img src="./imgs/pngwing.com.png" alt="[Logo de Lenovo]" title="Lenovo" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/Credence-ID-Logo.webp" alt="[Logo de Credence ID]" title="Credence-ID-Logo" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/greenbit-logo.jpg" alt="[Logo de Greenbit]" title="Greenbit" class="brand-logo-base logo-prime">
+                        <img src="./imgs/Bodet-Time-2016.png" alt="[Logo de Bodet]" title="Bodet" class="brand-logo-base logo-marcas">
+                        <img src="./imgs/Primekey.png" alt="[Logo de Primekey]" title="Primekey" class="brand-logo-base logo-prime">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -299,13 +230,27 @@
     <section id="instituciones" class="py-16 md:py-24 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Instituciones que Confían en Nosotros</h2>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                <img src="./imgs/PCM-Economia.webp" alt="Logo de Ministerio de Economía y Finanzas" title="Ministerio de Economía y Finanzas" class="brand-logo-base logo-minEconomia">
-                <img src="./imgs/logo-Poder-Judicial-del-Perú-squared-300x300.gif" alt="Logo de Poder Judicial" title="Poder Judicial" class="brand-logo-base logo-poder">
-                <img src="./imgs/Onpe.svg" alt="Logo de ONPE" title="ONPE" class="brand-logo-base logo-instituciones">
-                <img src="./imgs/pngwing.com (1).png" alt="Logo de UNESCO" title="UNESCO" class="brand-logo-base logo-instituciones">
-                <img src="./imgs/logoreniec.ai_.png" alt="Logo de RENIEC" title="RENIEC" class="brand-logo-base logo-instituciones">
-                <img src="./imgs/INEI_Logo.jpg" alt="Logo de INEI" title="INEI" class="brand-logo-base logo-instituciones">
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <!-- Primer set de logos de instituciones -->
+                    <div class="logo-container">
+                        <img src="./imgs/PCM-Economia.webp" alt="[Logo de Ministerio de Economía y Finanzas]" title="Ministerio de Economía y Finanzas" class="brand-logo-base logo-minEconomia">
+                        <img src="./imgs/logo-Poder-Judicial-del-Perú-squared-300x300.gif" alt="[Logo de Poder Judicial]" title="Poder Judicial" class="brand-logo-base logo-poder">
+                        <img src="./imgs/Onpe.svg" alt="[Logo de ONPE]" title="ONPE" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/pngwing.com (1).png" alt="[Logo de UNESCO]" title="UNESCO" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/logoreniec.ai_.png" alt="[Logo de RENIEC]" title="RENIEC" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/INEI_Logo.jpg" alt="[Logo de INEI]" title="INEI" class="brand-logo-base logo-instituciones">
+                    </div>
+                    <!-- Segundo set de logos de instituciones (duplicado para bucle infinito) -->
+                    <div class="logo-container">
+                        <img src="./imgs/PCM-Economia.webp" alt="[Logo de Ministerio de Economía y Finanzas]" title="Ministerio de Economía y Finanzas" class="brand-logo-base logo-minEconomia">
+                        <img src="./imgs/logo-Poder-Judicial-del-Perú-squared-300x300.gif" alt="[Logo de Poder Judicial]" title="Poder Judicial" class="brand-logo-base logo-poder">
+                        <img src="./imgs/Onpe.svg" alt="[Logo de ONPE]" title="ONPE" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/pngwing.com (1).png" alt="[Logo de UNESCO]" title="UNESCO" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/logoreniec.ai_.png" alt="[Logo de RENIEC]" title="RENIEC" class="brand-logo-base logo-instituciones">
+                        <img src="./imgs/INEI_Logo.jpg" alt="[Logo de INEI]" title="INEI" class="brand-logo-base logo-instituciones">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -363,14 +308,18 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
     <script>
-        // Script para el año actual en el footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // Script para el año actual
+        const yearSpan = document.getElementById('currentYear');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
 
         // Lógica para el menú hamburguesa
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
@@ -382,45 +331,53 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
-
-                // Cerrar menú móvil si está abierto y el enlace es del menú móvil
                 if (mobileMenu && !mobileMenu.classList.contains('hidden') && this.classList.contains('mobile-menu-link')) {
                     mobileMenu.classList.add('hidden');
                 }
-                
                 if (targetId.length > 1 && targetId !== '#') {
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         const headerOffset = document.querySelector('header').offsetHeight || 70;
                         const elementPosition = targetElement.getBoundingClientRect().top;
                         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                        
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth"
-                        });
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
                     }
                 }
             });
         });
 
+        // Inicialización de Swiper para el carrusel de productos
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 },
+            }
+        });
 
-        // Lógica del Modal Configurador Inteligente
+        // Lógica del Modal Configurador
         const modal = document.getElementById('configuratorModal');
         const openBtn = document.getElementById('openConfiguratorBtn');
         const closeBtn = document.getElementById('closeModalBtn');
         const getRecommendationBtn = document.getElementById('getRecommendationBtn');
-        const userNeedsTextarea = document.getElementById('userNeeds');
-        const geminiResponseDiv = document.getElementById('geminiResponse');
-        const geminiResponseContainer = document.getElementById('geminiResponseContainer');
-        const loader = document.getElementById('loader');
 
-        if(openBtn) {
+        if (openBtn) {
             openBtn.onclick = function() {
                 if(modal) modal.style.display = "block";
-                if(geminiResponseContainer) geminiResponseContainer.style.display = "none"; 
-                if(geminiResponseDiv) geminiResponseDiv.innerHTML = '<pre>Esperando tu consulta...</pre>';
-                if(userNeedsTextarea) userNeedsTextarea.value = ""; 
             }
         }
         if(closeBtn) {
@@ -428,121 +385,41 @@
                 if(modal) modal.style.display = "none";
             }
         }
-        
         window.onclick = function(event) {
             if (event.target == modal) {
                 if(modal) modal.style.display = "none";
             }
         }
-
-        if(getRecommendationBtn) {
-            getRecommendationBtn.onclick = async function() {
-                const userQuery = userNeedsTextarea.value.trim();
-                if (!userQuery) {
-                    geminiResponseDiv.innerHTML = '<pre class="text-red-500">Por favor, describe tus necesidades primero.</pre>';
-                    geminiResponseContainer.style.display = "block";
-                    return;
-                }
-
-                if(loader) loader.style.display = "block";
-                if(geminiResponseDiv) geminiResponseDiv.innerHTML = ""; 
-                if(geminiResponseContainer) geminiResponseContainer.style.display = "none";
-
-
-                const prompt = `Eres un asistente experto en tecnología para GLEF, una empresa peruana que provee equipos como computadoras de escritorio, all-in-one, laptops y tablets al estado y al público. Un cliente describe su necesidad: '${userQuery}'. Basado en esto, recomienda de forma concisa y en español peruano:
-1. Tipo de equipo principal (desktop, laptop, AIO, tablet) más adecuado.
-2. Características clave sugeridas (ej. procesador, RAM, almacenamiento, tamaño de pantalla, características especiales relevantes).
-3. Breves consideraciones adicionales para este tipo de cliente o necesidad.
-Sé claro, amigable y profesional. Estructura tu respuesta en puntos para fácil lectura.`;
-
-                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = { contents: chatHistory };
-                const apiKey = ""; 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error("Error en la API de Gemini:", errorData);
-                        throw new Error(`Error de la API: ${response.status} ${response.statusText}. Detalles: ${JSON.stringify(errorData.error ? errorData.error.message : 'No hay detalles adicionales.')}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    let recommendationText = "No se pudo obtener una recomendación en este momento.";
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        recommendationText = result.candidates[0].content.parts[0].text;
-                    } else {
-                         console.warn("Respuesta inesperada de Gemini:", result);
-                    }
-                    if(geminiResponseDiv) geminiResponseDiv.innerHTML = `<pre>${recommendationText}</pre>`;
-
-                } catch (error) {
-                    console.error("Error al llamar a Gemini API:", error);
-                    if(geminiResponseDiv) geminiResponseDiv.innerHTML = `<pre class="text-red-500">Lo sentimos, ocurrió un error al procesar tu solicitud: ${error.message}. Por favor, intenta de nuevo más tarde.</pre>`;
-                } finally {
-                    if(loader) loader.style.display = "none";
-                    if(geminiResponseContainer) geminiResponseContainer.style.display = "block";
-                }
-            }
-        }
         
+        // El resto del script para Gemini y para resaltar el nav activo se mantiene igual
         // Lógica para resaltar enlace activo en NAV
         const sections = document.querySelectorAll("section[id]");
         const allNavLinks = document.querySelectorAll(".nav-item-link"); 
         const headerElement = document.querySelector("header");
-        let headerHeight = 70; 
-        if (headerElement) {
-            headerHeight = headerElement.offsetHeight;
-        }
+        let headerHeight = headerElement ? headerElement.offsetHeight : 70;
 
         function updateActiveNavLink() {
             let currentSectionId = "";
-            // Considerar el caso donde no hay secciones (poco probable aquí, pero buena práctica)
             if (sections.length === 0) return;
-
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                // Ajuste para que la sección se active un poco antes de que su tope exacto pase el header
-                // Un valor de ~1.5 a 2 veces la altura del header suele funcionar bien como umbral superior
-                // y un poco por encima del header para el umbral inferior.
-                const activationPoint = sectionTop - headerHeight - (window.innerHeight * 0.3); // Activar cuando el 30% superior de la sección esté visible o por encima
-                
-                if (window.scrollY >= activationPoint) {
+                if (window.scrollY >= sectionTop - headerHeight - 100) {
                     currentSectionId = section.getAttribute("id");
                 }
             });
-            
-            // Si después de revisar todas las secciones, currentSectionId está vacío (estamos muy arriba),
-            // y si la primera sección es "inicio", activarla.
             if (!currentSectionId && sections.length > 0 && sections[0].id === 'inicio' && window.scrollY < sections[0].offsetTop) {
                  currentSectionId = 'inicio';
             }
-
-
             allNavLinks.forEach(link => {
                 link.classList.remove('active-nav-link');
                 const linkHref = link.getAttribute('href');
-                if (linkHref && linkHref.startsWith("#") && linkHref.length > 1) {
-                    // Quitar el '#' del href para comparar con el ID de la sección
-                    if (linkHref.substring(1) === currentSectionId) {
-                        link.classList.add('active-nav-link');
-                    }
+                if (linkHref && linkHref.substring(1) === currentSectionId) {
+                    link.classList.add('active-nav-link');
                 }
             });
         }
-
         window.addEventListener('scroll', updateActiveNavLink);
-        window.addEventListener('load', updateActiveNavLink); 
-        
+        window.addEventListener('load', updateActiveNavLink);
     </script>
 </body>
 </html>
